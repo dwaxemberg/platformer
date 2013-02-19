@@ -32,6 +32,6 @@ public class MainCharacter : MonoBehaviour {
 		if (Input.GetKeyUp(KeyCode.S)) {
 			rotated = false;
 		}
-		
+		//random shit
 	}
 }
