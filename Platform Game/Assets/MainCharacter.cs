@@ -7,6 +7,10 @@ public class MainCharacter : MonoBehaviour {
 	void Start () {
 	
 	}
+	/*
+	 * need to add jumping. Make it 2D movement, i.e. left and right (pan) rotate 180 degrees
+	 */
+
 	
 	// Update is called once per frame
 	void Update () {
