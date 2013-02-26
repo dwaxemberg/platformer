@@ -16,10 +16,10 @@ public class PauseMenu : MonoBehaviour {
 	void Start() 
 	{
 		Time.timeScale = 1;
-		//PauseGame();
+		PauseGame();
 	}
 	
-	// Update is called once per frame
+	// LastUpdate is called after all other Updates
 	void Update() 
 	{
 		if(Input.GetKeyDown (KeyCode.P))
@@ -37,23 +37,26 @@ public class PauseMenu : MonoBehaviour {
 	}
 	void OnGUI()
 	{
+		//If you have a custom skin, use it
 		if(skin != null)
 			GUI.skin = skin;
+		//If the game is paused, display the correct menu
 		if(IsGamePaused())
 		{
 			GUI.color = statColor;
 			switch(currentPage)
 			{
-			case Page.Main:	MainPauseMenu ();
-				break;
-			case Page.Credits: showCredits ();
-				break;
-			case Page.Options: showOptions ();
-				break;
+				case Page.Main:	MainPauseMenu ();
+					break;
+				case Page.Credits: showCredits ();
+					break;
+				case Page.Options: showOptions ();
+					break;
 			}
 		}
 			
 	}
+	//Sets timeScale to .0001 (0 was causing unity to crash occasionally)
 	void PauseGame()
 	{
 		savedTimeScale = Time.timeScale;
@@ -61,6 +64,7 @@ public class PauseMenu : MonoBehaviour {
 		AudioListener.pause = true;
 		currentPage = Page.Main;
 	}
+	//Restores timeScale from .0001 to previous
 	void UnPauseGame()
 	{
 		Time.timeScale = savedTimeScale;
@@ -71,6 +75,7 @@ public class PauseMenu : MonoBehaviour {
 	{
 		//restart the game
 	}
+	//Displays option sliders/buttons
 	void showOptions()
 	{
 		BeginPage (300,300);
@@ -85,6 +90,7 @@ public class PauseMenu : MonoBehaviour {
 		}
 		EndPage ();
 	}
+	//Displays custom credits
 	void showCredits()
 	{
 		BeginPage (300,300);
@@ -97,29 +103,35 @@ public class PauseMenu : MonoBehaviour {
 		GUILayout.Label ("Date");
 		EndPage ();
 	}
+	//If timeScale is < 1, game is paused
 	public bool IsGamePaused()
 	{
 		return (Time.timeScale < 1);
 	}
+	//Display button in button left corner that, when clicked, goes back to main menu
 	void ShowBackButton()
 	{
 		if(GUI.Button (new Rect(20, Screen.height - 50, 50, 20), "Back"))
 				currentPage = Page.Main;
 	}
+	//Creates an area for the GUI components to use
 	void BeginPage(int width, int height)
 	{
 		GUILayout.BeginArea (new Rect((Screen.width - width) / 2, (Screen.height - height) / 2, width, height));
 	}
+	//Ends the page.  If not on main menu, display the back button.
 	void EndPage()
 	{
-		GUILayout.EndArea ();
+		GUILayout.EndArea();
 		if(currentPage != Page.Main)
 			ShowBackButton();
 	}
+	//Has the game started
 	bool IsBeginning()
 	{
 		return (Time.time <= startTime);
 	}
+	//Main menu options
 	void MainPauseMenu()
 	{
 		BeginPage(200,200);
