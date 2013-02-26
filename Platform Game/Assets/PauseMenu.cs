@@ -10,7 +10,7 @@ public class PauseMenu : MonoBehaviour {
 	public Color statColor = Color.yellow;
 	public enum Page
 	{
-		None,Main,Options,Credits
+		None,Main,Options,Credits,LevelSelect
 	}
 	// Use this for initialization
 	void Start() 
@@ -46,11 +46,13 @@ public class PauseMenu : MonoBehaviour {
 			GUI.color = statColor;
 			switch(currentPage)
 			{
-				case Page.Main:	MainPauseMenu ();
+				case Page.Main:	MainPauseMenu();
 					break;
-				case Page.Credits: showCredits ();
+				case Page.Credits: showCredits();
 					break;
-				case Page.Options: showOptions ();
+				case Page.Options: showOptions();
+					break;
+				case Page.LevelSelect: showLevels();
 					break;
 			}
 		}
@@ -71,9 +73,10 @@ public class PauseMenu : MonoBehaviour {
 		AudioListener.pause = false;
 		currentPage = Page.None;
 	}
+	//Restart Scene
 	void RestartGame()
 	{
-		//restart the game
+		Application.LoadLevel(Application.loadedLevelName);
 	}
 	//Displays option sliders/buttons
 	void showOptions()
@@ -101,6 +104,19 @@ public class PauseMenu : MonoBehaviour {
 		GUILayout.Label ("Person 1");
 		GUILayout.Label ("Person 1");
 		GUILayout.Label ("Date");
+		EndPage ();
+	}
+	//Displays level selection
+	void showLevels()
+	{
+		BeginPage (300,300);
+		GUILayout.Label ("Select a Level:");
+		if(GUILayout.Button ("Level 1"))
+			Application.LoadLevel(0);
+		if(GUILayout.Button ("Level 2"))
+			Application.LoadLevel(1);
+		if(GUILayout.Button ("Level 3"))
+			Application.LoadLevel(2);
 		EndPage ();
 	}
 	//If timeScale is < 1, game is paused
@@ -137,8 +153,10 @@ public class PauseMenu : MonoBehaviour {
 		BeginPage(200,200);
 		if(GUILayout.Button (IsBeginning() ? "Play" : "Continue"))
 			UnPauseGame();
-		if(GUILayout.Button ("Restart"))
+		if(GUILayout.Button ("Restart Level"))
 			RestartGame();
+		if(GUILayout.Button ("Level Selection"))
+			currentPage = Page.LevelSelect;
 		if(GUILayout.Button ("Options"))
 			currentPage = Page.Options;
 		if(GUILayout.Button ("Credits"))
