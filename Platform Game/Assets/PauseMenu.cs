@@ -97,7 +97,7 @@ public class PauseMenu : MonoBehaviour {
 		GUILayout.Label ("Date");
 		EndPage ();
 	}
-	bool IsGamePaused()
+	public bool IsGamePaused()
 	{
 		return (Time.timeScale < 1);
 	}
