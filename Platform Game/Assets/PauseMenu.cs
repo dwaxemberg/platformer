@@ -16,6 +16,7 @@ public class PauseMenu : MonoBehaviour {
 	void Start() 
 	{
 		Time.timeScale = 1;
+		//PauseGame();
 	}
 	
 	// Update is called once per frame
@@ -45,6 +46,10 @@ public class PauseMenu : MonoBehaviour {
 			{
 			case Page.Main:	MainPauseMenu ();
 				break;
+			case Page.Credits: showCredits ();
+				break;
+			case Page.Options: showOptions ();
+				break;
 			}
 		}
 			
@@ -52,7 +57,7 @@ public class PauseMenu : MonoBehaviour {
 	void PauseGame()
 	{
 		savedTimeScale = Time.timeScale;
-		Time.timeScale = 0;
+		Time.timeScale = 0.0001f;
 		AudioListener.pause = true;
 		currentPage = Page.Main;
 	}
@@ -62,9 +67,39 @@ public class PauseMenu : MonoBehaviour {
 		AudioListener.pause = false;
 		currentPage = Page.None;
 	}
+	void RestartGame()
+	{
+		//restart the game
+	}
+	void showOptions()
+	{
+		BeginPage (300,300);
+		GUILayout.Label ("Volume");
+		AudioListener.volume = GUILayout.HorizontalSlider (AudioListener.volume, 0, 1);
+		GUILayout.Label ("Quality Level");
+		string[] qualities = QualitySettings.names;
+		for(int i=0; i<qualities.Length; i++)
+		{
+			if(GUILayout.Button (qualities[i]))
+				QualitySettings.SetQualityLevel (i,true);
+		}
+		EndPage ();
+	}
+	void showCredits()
+	{
+		BeginPage (300,300);
+		GUILayout.Label ("EECS 290 - Introduction to Game Design, with Professor whatshisname");
+		GUILayout.Label ("GAME NAME");
+		GUILayout.Label ("Person 1");
+		GUILayout.Label ("Person 1");
+		GUILayout.Label ("Person 1");
+		GUILayout.Label ("Person 1");
+		GUILayout.Label ("Date");
+		EndPage ();
+	}
 	bool IsGamePaused()
 	{
-		return (Time.timeScale == 0);
+		return (Time.timeScale < 1);
 	}
 	void ShowBackButton()
 	{
@@ -83,13 +118,19 @@ public class PauseMenu : MonoBehaviour {
 	}
 	bool IsBeginning()
 	{
-		return (Time.time < startTime);
+		return (Time.time <= startTime);
 	}
 	void MainPauseMenu()
 	{
 		BeginPage(200,200);
 		if(GUILayout.Button (IsBeginning() ? "Play" : "Continue"))
 			UnPauseGame();
+		if(GUILayout.Button ("Restart"))
+			RestartGame();
+		if(GUILayout.Button ("Options"))
+			currentPage = Page.Options;
+		if(GUILayout.Button ("Credits"))
+			currentPage = Page.Credits;
 		EndPage();
 	}
 	void OnApplicationPause(bool pause)
