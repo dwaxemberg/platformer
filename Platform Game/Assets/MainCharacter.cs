@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MainCharacter : MonoBehaviour {
 	PauseMenu pause;
-	public float Velocity = 0.5F;
+	public float Velocity = 0.25F;
 	public float RotationSpeed = 360F;
 	public float JumpSpeed = 10F;
 	
@@ -11,8 +11,10 @@ public class MainCharacter : MonoBehaviour {
 	private Quaternion qRight = Quaternion.identity;
 	private Quaternion qLeft = Quaternion.Euler(0F, 180F, 0F);
 	
+	private float distToGround;
 	// Use this for initialization
 	void Start () {
+		distToGround = collider.bounds.extents.y;
 	}
 	
 	// Update is called once per frame
@@ -43,14 +45,15 @@ public class MainCharacter : MonoBehaviour {
 				qTo = qLeft;
 				
 			}
-			if (Input.GetKeyDown(KeyCode.Space)) {
-				if(rigidbody.velocity.y < 1F )
-				{
-					rigidbody.velocity = new Vector3(0F,10F,0F);
-				}
+			if (Input.GetKeyDown(KeyCode.Space) && IsGrounded()) {
+				rigidbody.velocity = new Vector3(0F,JumpSpeed,0F);
 			}
 			
 			transform.rotation = Quaternion.RotateTowards(transform.rotation, qTo, Time.deltaTime * RotationSpeed);
 		}
+	}
+	
+	bool IsGrounded() {
+		return Physics.Raycast(this.transform.position, -Vector3.up, distToGround);
 	}
 }
