@@ -1,8 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+<<<<<<< HEAD
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\MainCharacter.cs">
     <Files>
       <File FileName="Assets\MainCharacter.cs" Line="37" Column="30" />
+=======
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\PauseMenu.cs">
+    <Files>
+      <File FileName="Assets\PauseMenu.cs" Line="109" Column="1" />
+      <File FileName="Assets\MainCharacter.cs" Line="27" Column="10" />
+>>>>>>> 6073ea57c3fbc472d8587d12222f00646c325d67
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
