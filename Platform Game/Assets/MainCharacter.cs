@@ -3,50 +3,54 @@ using System.Collections;
 
 public class MainCharacter : MonoBehaviour {
 	PauseMenu pause;
-	public float VELOCITY = 0.5F;
-	public float rotationSpeed = 50;
+	public float Velocity = 0.5F;
+	public float RotationSpeed = 360F;
+	public float JumpSpeed = 10F;
 	
-	private Vector3 currentEuler;
-	private bool rotating = false;
+	private Quaternion qTo = Quaternion.identity;
+	private Quaternion qRight = Quaternion.identity;
+	private Quaternion qLeft = Quaternion.Euler(0F, 180F, 0F);
+	
 	// Use this for initialization
 	void Start () {
-		currentEuler = transform.eulerAngles;	
 	}
-	/*
-	 * need to add jumping. Make it 2D movement, i.e. left and right (pan) rotate 180 degrees
-	 */
-
-	Quaternion rightRotation = Quaternion.Euler(0,180,0);
-	Quaternion leftRotation = Quaternion.Euler(0,-180,0);
+	
 	// Update is called once per frame
 	void Update () {
+		// Keep character anchored on x axis
+		Vector3 pos = transform.position;
+		pos.x = 0;
+		transform.position = pos;
+		
 		pause = (PauseMenu)FindObjectOfType (typeof(PauseMenu));
 		bool isPaused = pause.IsGamePaused();
 		if(!isPaused) {
 			if (Input.GetKey(KeyCode.W)) {
-				// move forward.
-				this.transform.Translate(new Vector3(0F, 0F, 1F) * VELOCITY);
+				// move forward
+				this.transform.Translate(new Vector3(0F, 0F, 1F) * Velocity);
 			}
 			if (Input.GetKey(KeyCode.S)) {
 				// Move backwards
-				this.transform.Translate(new Vector3(0f, 0f, 1f) * -VELOCITY);
+				this.transform.Translate(new Vector3(0F, 0F, 1F) * -Velocity);
 			}
 			if (Input.GetKeyDown (KeyCode.D)) {
 				// Turn right 180 degrees
-				var startRotation = this.transform.rotation;
-				var endRotation = this.transform.rotation * Quaternion.Euler(0,180,0);
-				var rate = 1;
-				float t = 0;
-				while(t < 1) {
-					t += (Time.deltaTime * rate);
-					this.transform.rotation = Quaternion.Slerp(startRotation, endRotation, t);
-				}
+				qTo = qRight;
+				
 			}
 			if (Input.GetKeyDown(KeyCode.A)) {
 				// Turn left 180 degrees
-				//this.transform.Rotate(0, -360*Time.deltaTime, 0);
+				qTo = qLeft;
 				
 			}
+			if (Input.GetKeyDown(KeyCode.Space)) {
+				if(rigidbody.velocity.y < 1F )
+				{
+					rigidbody.velocity = new Vector3(0F,10F,0F);
+				}
+			}
+			
+			transform.rotation = Quaternion.RotateTowards(transform.rotation, qTo, Time.deltaTime * RotationSpeed);
 		}
 	}
 }
