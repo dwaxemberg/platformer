@@ -7,13 +7,16 @@ public class MainCharacter : MonoBehaviour {
 	public float RotationSpeed = 360F;
 	public float JumpSpeed = 10F;
 	
+	// Variables for turning
 	private Quaternion qTo = Quaternion.identity;
 	private Quaternion qRight = Quaternion.identity;
 	private Quaternion qLeft = Quaternion.Euler(0F, 180F, 0F);
 	private const float fLittleBit = 0.01f;
     private bool bFirst = true;
 	
+	// Variable for jump constraints
 	private float distToGround;
+	
 	// Use this for initialization
 	void Start () {
 		distToGround = collider.bounds.extents.y;
@@ -30,7 +33,7 @@ public class MainCharacter : MonoBehaviour {
 		bool isPaused = pause.IsGamePaused();
 		if(!isPaused) {
 			if (Input.GetKey(KeyCode.W)) {
-				// move forward
+				// Move forward
 				this.transform.Translate(new Vector3(0F, 0F, 1F) * Velocity);
 			}
 			if (Input.GetKey(KeyCode.S)) {
@@ -80,13 +83,16 @@ public class MainCharacter : MonoBehaviour {
 				}
 			}
 			if (Input.GetKeyDown(KeyCode.Space) && IsGrounded()) {
+				// Jump
 				rigidbody.velocity = new Vector3(0F,JumpSpeed,0F);
 			}
 			
+			// For turning
 			transform.rotation = Quaternion.RotateTowards(transform.rotation, qTo, Time.deltaTime * RotationSpeed);
 		}
 	}
 	
+	// Check to see if object is resting on a surface
 	bool IsGrounded() {
 		return Physics.Raycast(this.transform.position, -Vector3.up, distToGround);
 	}
