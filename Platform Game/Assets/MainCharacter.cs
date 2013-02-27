@@ -10,6 +10,8 @@ public class MainCharacter : MonoBehaviour {
 	private Quaternion qTo = Quaternion.identity;
 	private Quaternion qRight = Quaternion.identity;
 	private Quaternion qLeft = Quaternion.Euler(0F, 180F, 0F);
+	private const float fLittleBit = 0.01f;
+    private bool bFirst = true;
 	
 	private float distToGround;
 	// Use this for initialization
@@ -37,13 +39,45 @@ public class MainCharacter : MonoBehaviour {
 			}
 			if (Input.GetKeyDown (KeyCode.D)) {
 				// Turn right 180 degrees
-				qTo = qRight;
-				
+				if(Vector3.Angle(transform.forward, Vector3.forward) < fLittleBit) {
+					transform.rotation = Quaternion.Euler(0F, 0F + fLittleBit, 0F);
+					qTo = qLeft;
+					bFirst = true;
+				}
+				else if (Vector3.Angle(transform.forward, Vector3.back) < fLittleBit) {
+					transform.rotation = Quaternion.Euler(0F, 180F + fLittleBit, 0F);
+					qTo = qRight;
+					bFirst = false;
+				}
+				else {
+					if(bFirst) {
+						qTo = qLeft;
+					}
+					else {
+						qTo = qRight;
+					}
+				}
 			}
 			if (Input.GetKeyDown(KeyCode.A)) {
 				// Turn left 180 degrees
-				qTo = qLeft;
-				
+				if (Vector3.Angle(transform.forward, Vector3.forward) < fLittleBit) {
+					transform.rotation = Quaternion.Euler(0.0f, 0.0f - fLittleBit, 0.0f);
+					qTo = qLeft;
+					bFirst = false;
+				}
+				else if (Vector3.Angle(transform.forward, Vector3.back) < fLittleBit) {
+					transform.rotation = Quaternion.Euler(0.0f, 180.0f-fLittleBit,0.0f);
+          			qTo = qRight;
+          			bFirst = true;
+				}
+				else {
+					if (bFirst) {
+              			qTo = qRight;
+					}
+          			else {
+              			qTo = qLeft;
+					}
+				}
 			}
 			if (Input.GetKeyDown(KeyCode.Space) && IsGrounded()) {
 				rigidbody.velocity = new Vector3(0F,JumpSpeed,0F);
