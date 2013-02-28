@@ -97,4 +97,21 @@ public class MainCharacter : MonoBehaviour {
 	bool IsGrounded() {
 		return Physics.Raycast(this.transform.position, -Vector3.up, distToGround);
 	}
+
+	public static void MoveToLevel(int level) {
+		switch (level) {
+		case 1:
+			GameObject.FindGameObjectWithTag("Player").transform.position = new Vector3(0F, 13F, 230F);
+			break;
+		case 2:
+			GameObject.FindGameObjectWithTag("Player").transform.position = new Vector3(0F, 13F, -280F);
+			break;
+		case 3:
+			GameObject.FindGameObjectWithTag("Player").transform.position = new Vector3(0F, 13F, -820F);
+			break;
+		default:
+			GameObject.FindGameObjectWithTag("Player").transform.position = new Vector3(0F, 13F, 230F);
+			break;
+		}
+	}
 }

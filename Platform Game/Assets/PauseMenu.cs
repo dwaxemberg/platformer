@@ -5,7 +5,9 @@ public class PauseMenu : MonoBehaviour {
 	private Page currentPage;
 	private float savedTimeScale;
 	private float startTime = 0.1f;
+	private int currentLevel = 1;
 	
+	public int numLevels = 3;
 	public GUISkin skin;
 	public AudioSource music;
 	public Color statColor = Color.yellow;
@@ -103,7 +105,7 @@ public class PauseMenu : MonoBehaviour {
 	void showCredits()
 	{
 		BeginPage (300,300);
-		GUILayout.Label ("EECS 290 - Introduction to Game Design, with Professor whatshisname");
+		GUILayout.Label ("EECS 290 - Introduction to Game Design, with Professor Smith");
 		GUILayout.Label ("GAME NAME");
 		GUILayout.Label ("Person 1");
 		GUILayout.Label ("Person 1");
@@ -183,5 +185,14 @@ public class PauseMenu : MonoBehaviour {
 	{
 		if(IsGamePaused())
 			AudioListener.pause = true;
+	}
+
+	public void SetCurrentLevel(int level) {
+		if (level > 0 && level <= numLevels) {
+			currentLevel = level;
+		}
+	}
+	public int GetCurrentLevel() {
+		return currentLevel;
 	}
 }
