@@ -14,6 +14,6 @@ public class Death : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider col) {
-		pause.RestartGame();
+		pause.RestartLevel();
 	}
 }
