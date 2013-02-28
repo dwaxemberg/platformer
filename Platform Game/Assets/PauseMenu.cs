@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class PauseMenu : MonoBehaviour {
+	GameObject player, start1, start2, start3;
 	private Page currentPage;
 	private float savedTimeScale;
 	private float startTime = 0.1f;
@@ -11,6 +12,7 @@ public class PauseMenu : MonoBehaviour {
 	public GUISkin skin;
 	public AudioSource music;
 	public Color statColor = Color.yellow;
+	
 	public enum Page
 	{
 		None,Main,Options,Credits,LevelSelect,MusicSelect
@@ -19,6 +21,11 @@ public class PauseMenu : MonoBehaviour {
 	void Start() 
 	{
 		Time.timeScale = 1;
+		player = GameObject.FindGameObjectWithTag("Player");
+		//start1 = GameObject.FindGameObjectWithTag("Start1");
+		start1 = GameObject.Find("Start1");
+		start2 = GameObject.Find("Start2");
+		start3 = GameObject.Find("Start3");
 		PauseGame();
 	}
 	
@@ -78,6 +85,10 @@ public class PauseMenu : MonoBehaviour {
 		AudioListener.pause = false;
 		currentPage = Page.None;
 	}
+	public void RestartLevel()
+	{
+		loadLevel(currentLevel);
+	}
 	//Restart Scene
 	public void RestartGame()
 	{
@@ -107,11 +118,11 @@ public class PauseMenu : MonoBehaviour {
 		BeginPage (300,300);
 		GUILayout.Label ("EECS 290 - Introduction to Game Design, with Professor Smith");
 		GUILayout.Label ("GAME NAME");
-		GUILayout.Label ("Person 1");
-		GUILayout.Label ("Person 1");
-		GUILayout.Label ("Person 1");
-		GUILayout.Label ("Person 1");
-		GUILayout.Label ("Date");
+		GUILayout.Label ("Sam Schneider");
+		GUILayout.Label ("Charlie Marshall");
+		GUILayout.Label ("Diego Waxemburg");
+		GUILayout.Label ("Chris Baumann");
+		GUILayout.Label ("2/28/2013");
 		EndPage ();
 	}
 	//Displays level selection
@@ -120,11 +131,23 @@ public class PauseMenu : MonoBehaviour {
 		BeginPage (300,300);
 		GUILayout.Label ("Select a Level:");
 		if(GUILayout.Button ("Level 1"))
-			Application.LoadLevel(0);
+		{
+			currentLevel = 1;
+			//MainCharacter.MoveToLevel(1);
+			loadLevel (1);
+		}
 		if(GUILayout.Button ("Level 2"))
-			Application.LoadLevel(1);
+		{
+			currentLevel = 2;
+			//MainCharacter.MoveToLevel(1);
+			loadLevel (2);
+		}
 		if(GUILayout.Button ("Level 3"))
-			Application.LoadLevel(2);
+		{
+			currentLevel = 3;
+			//MainCharacter.MoveToLevel(1);
+			loadLevel (3);
+		}
 		EndPage ();
 	}
 	//Display music selection
@@ -172,6 +195,8 @@ public class PauseMenu : MonoBehaviour {
 		if(GUILayout.Button (IsBeginning() ? "Play" : "Continue"))
 			UnPauseGame();
 		if(GUILayout.Button ("Restart Level"))
+			RestartLevel();
+		if(GUILayout.Button ("Restart Game"))
 			RestartGame();
 		if(GUILayout.Button ("Level Selection"))
 			currentPage = Page.LevelSelect;
@@ -194,5 +219,26 @@ public class PauseMenu : MonoBehaviour {
 	}
 	public int GetCurrentLevel() {
 		return currentLevel;
+	}
+	public void loadLevel(int level)
+	{
+		switch(level){
+			case 1: {
+				Vector3 newPos = new Vector3(start1.transform.position.x, start1.transform.position.y, start1.transform.position.z);
+				player.transform.position = newPos;
+				break;
+			}
+			case 2: {
+				Vector3 newPos = new Vector3(start2.transform.position.x, start2.transform.position.y, start2.transform.position.z);
+				player.transform.position = newPos;
+				break;
+			}
+			case 3: {
+				Vector3 newPos = new Vector3(start3.transform.position.x, start3.transform.position.y, start3.transform.position.z);
+				player.transform.position = newPos;
+				break;
+			}
+				
+		}
 	}
 }
