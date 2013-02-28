@@ -77,7 +77,7 @@ public class PauseMenu : MonoBehaviour {
 		currentPage = Page.None;
 	}
 	//Restart Scene
-	void RestartGame()
+	public void RestartGame()
 	{
 		Application.LoadLevel(Application.loadedLevelName);
 	}
