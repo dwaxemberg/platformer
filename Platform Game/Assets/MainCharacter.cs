@@ -101,16 +101,16 @@ public class MainCharacter : MonoBehaviour {
 	public static void MoveToLevel(int level) {
 		switch (level) {
 		case 1:
-			GameObject.FindGameObjectWithTag("Player").transform.position = new Vector3(0F, 13F, 230F);
+			GameObject.FindGameObjectWithTag("Player").transform.position = new Vector3(0F, 73F, -1280F);
 			break;
 		case 2:
-			GameObject.FindGameObjectWithTag("Player").transform.position = new Vector3(0F, 13F, -280F);
+			GameObject.FindGameObjectWithTag("Player").transform.position = new Vector3(0F, 2F, -770F);
 			break;
 		case 3:
-			GameObject.FindGameObjectWithTag("Player").transform.position = new Vector3(0F, 13F, -820F);
+			GameObject.FindGameObjectWithTag("Player").transform.position = new Vector3(0F, 4F, -240F);
 			break;
 		default:
-			GameObject.FindGameObjectWithTag("Player").transform.position = new Vector3(0F, 13F, 230F);
+			GameObject.FindGameObjectWithTag("Player").transform.position = new Vector3(0F, 73F, -1280F);
 			break;
 		}
 	}

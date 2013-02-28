@@ -20,19 +20,23 @@ public class Finish : MonoBehaviour {
 		case 1:
 			// move to level 2
 			MainCharacter.MoveToLevel(2);
+			pause.SetCurrentLevel(2);
 			break;
 		case 2:
 			// move to level 3
 			MainCharacter.MoveToLevel(3);
+			pause.SetCurrentLevel(3);
 			break;
 		case 3:
 			// WINNER!
 			// restart game
-			pause.RestartGame();
+			MainCharacter.MoveToLevel(1);
+			pause.SetCurrentLevel(1);
 			break;
 		default:
 			// move to level 1'
 			MainCharacter.MoveToLevel(1);
+			pause.SetCurrentLevel(1);
 			break;
 		}
 	}
