@@ -20,6 +20,7 @@ public class MainCharacter : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		distToGround = collider.bounds.extents.y;
+		pause = (PauseMenu)FindObjectOfType (typeof(PauseMenu));
 	}
 	
 	// Update is called once per frame
@@ -29,7 +30,7 @@ public class MainCharacter : MonoBehaviour {
 		pos.x = 0;
 		transform.position = pos;
 		
-		pause = (PauseMenu)FindObjectOfType (typeof(PauseMenu));
+		
 		bool isPaused = pause.IsGamePaused();
 		if(!isPaused) {
 			if (Input.GetKey(KeyCode.W)) {

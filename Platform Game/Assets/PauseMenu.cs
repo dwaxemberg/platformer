@@ -7,10 +7,11 @@ public class PauseMenu : MonoBehaviour {
 	private float startTime = 0.1f;
 	
 	public GUISkin skin;
+	public AudioSource music;
 	public Color statColor = Color.yellow;
 	public enum Page
 	{
-		None,Main,Options,Credits,LevelSelect
+		None,Main,Options,Credits,LevelSelect,MusicSelect
 	}
 	// Use this for initialization
 	void Start() 
@@ -54,6 +55,8 @@ public class PauseMenu : MonoBehaviour {
 					break;
 				case Page.LevelSelect: showLevels();
 					break;
+				case Page.MusicSelect: showMusic();
+					break;
 			}
 		}
 			
@@ -84,6 +87,8 @@ public class PauseMenu : MonoBehaviour {
 		BeginPage (300,300);
 		GUILayout.Label ("Volume");
 		AudioListener.volume = GUILayout.HorizontalSlider (AudioListener.volume, 0, 1);
+		if(GUILayout.Button ("Music Options"))
+			currentPage = Page.MusicSelect;
 		GUILayout.Label ("Quality Level");
 		string[] qualities = QualitySettings.names;
 		for(int i=0; i<qualities.Length; i++)
@@ -91,6 +96,7 @@ public class PauseMenu : MonoBehaviour {
 			if(GUILayout.Button (qualities[i]))
 				QualitySettings.SetQualityLevel (i,true);
 		}
+		
 		EndPage ();
 	}
 	//Displays custom credits
@@ -118,6 +124,16 @@ public class PauseMenu : MonoBehaviour {
 		if(GUILayout.Button ("Level 3"))
 			Application.LoadLevel(2);
 		EndPage ();
+	}
+	//Display music selection
+	void showMusic()
+	{
+		BeginPage (300,00);
+		GUILayout.Label ("Select a track:");
+		
+		GUILayout.EndArea ();
+		if(GUI.Button (new Rect(20, Screen.height - 50, 50, 20), "Back"))
+				currentPage = Page.Options;
 	}
 	//If timeScale is < 1, game is paused
 	public bool IsGamePaused()
