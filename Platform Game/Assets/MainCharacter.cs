@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+// Charles Marshall
 public class MainCharacter : MonoBehaviour {
 	PauseMenu pause;
 	public float Velocity = 0.25F;
@@ -97,7 +98,8 @@ public class MainCharacter : MonoBehaviour {
 	bool IsGrounded() {
 		return Physics.Raycast(this.transform.position, -Vector3.up, distToGround);
 	}
-
+	
+	// Diego Waxemberg
 	public static void MoveToLevel(int level) {
 		switch (level) {
 		case 1:

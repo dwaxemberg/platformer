@@ -12,7 +12,8 @@ public class Death : MonoBehaviour {
 	void Update () {
 
 	}
-
+	
+	// Diego Waxemberg
 	void OnTriggerEnter(Collider col) {
 		pause.RestartLevel();
 	}

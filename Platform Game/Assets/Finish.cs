@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+
 public class Finish : MonoBehaviour {
 	GameObject player;
 	PauseMenu pause;
@@ -15,6 +16,7 @@ public class Finish : MonoBehaviour {
 	
 	}
 	
+	// Diego Waxemberg
 	void GoToNextLevel() {
 		switch (pause.GetCurrentLevel()) {
 		case 1:
