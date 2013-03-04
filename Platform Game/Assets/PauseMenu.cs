@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+// By Sam Schneider
 public class PauseMenu : MonoBehaviour {
 	GameObject player, start1, start2, start3;
 	private Page currentPage;
@@ -85,6 +86,7 @@ public class PauseMenu : MonoBehaviour {
 		AudioListener.pause = false;
 		currentPage = Page.None;
 	}
+	//Restart level
 	public void RestartLevel()
 	{
 		loadLevel(currentLevel);
@@ -211,31 +213,36 @@ public class PauseMenu : MonoBehaviour {
 		if(IsGamePaused())
 			AudioListener.pause = true;
 	}
-
+	//Sets currentLevel to whatever level you're on
 	public void SetCurrentLevel(int level) {
 		if (level > 0 && level <= numLevels) {
 			currentLevel = level;
 		}
 	}
+	//Returns currentLevel
 	public int GetCurrentLevel() {
 		return currentLevel;
 	}
+	//Moves the character to a new level
 	public void loadLevel(int level)
 	{
 		switch(level){
 			case 1: {
 				Vector3 newPos = new Vector3(start1.transform.position.x, start1.transform.position.y, start1.transform.position.z);
 				player.transform.position = newPos;
+				currentLevel = 1;
 				break;
 			}
 			case 2: {
 				Vector3 newPos = new Vector3(start2.transform.position.x, start2.transform.position.y, start2.transform.position.z);
 				player.transform.position = newPos;
+				currentLevel = 2;
 				break;
 			}
 			case 3: {
 				Vector3 newPos = new Vector3(start3.transform.position.x, start3.transform.position.y, start3.transform.position.z);
 				player.transform.position = newPos;
+				currentLevel = 3;
 				break;
 			}
 				
